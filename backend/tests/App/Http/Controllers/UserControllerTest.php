@@ -109,7 +109,7 @@ use Tests\TestCase;
         public function test_create_user_with_invalid_email()
         {
             $response = $this->post('api/user', [
-                'name' => 'John Doe',
+                'name' => 'Josue',
                 'email' => 'invalid-email',
                 'password' => '123456789',
             ]);
