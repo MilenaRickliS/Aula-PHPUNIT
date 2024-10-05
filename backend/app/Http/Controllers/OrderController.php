@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
@@ -13,6 +12,7 @@ class OrderController extends Controller
     {
         $orders = Order::all();
         return response()->json($orders); 
+        
     }
 
     
@@ -44,6 +44,8 @@ class OrderController extends Controller
             'message' => 'Pedido registrado com sucesso. O valor total do pedido foi '.$final_value,
             'order' => $order,
         ], 201);
+
+        
     }
 
     /**
@@ -52,7 +54,7 @@ class OrderController extends Controller
     public function show(string $id)
     {
         $order = Order::find($id);
-
+        
         if (!$order) {
             // Retorna um status 404 com uma mensagem de erro
             return response()->json(['error' => 'Pedido não encontrado.'], 404);

@@ -2,9 +2,7 @@
 
 namespace tests\App\Http\Controllers;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Http\Controllers\UserController;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
@@ -94,7 +92,6 @@ use Tests\TestCase;
         public function test_create_user_without_name()
         {
             $response = $this->post('api/user', [
-                'name' => 'teste',
                 'email' => 'test@gmail.com',
                 'password' => '123456789',
             ]);
@@ -115,7 +112,7 @@ use Tests\TestCase;
             ]);
 
             // Verifica se o status da resposta é 400
-            $response->assertStatus(201);
+            $response->assertStatus(400);
 
             // Verifica se o erro contém a mensagem apropriada
             $response->assertJsonValidationErrors(['email']);

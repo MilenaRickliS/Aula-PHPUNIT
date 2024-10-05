@@ -27,7 +27,11 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
         }
-
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required',
+        ]);
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -37,7 +41,10 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'Usuário registrado com sucesso.',
-            'user' => $user,
+            'user' => [
+                'name' => $user->name,
+                'email' => $user->email,
+            ]
         ], 201);
     }
 
@@ -73,6 +80,9 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = User::findOrFail($id);
+        if (!$user) {
+            return response()->json(['error' => 'Usuário não encontrado.'], 404);
+        }
         $user->delete();
         return response()->json(['msg' =>'Usuario deletado com sucesso!']);
     }
